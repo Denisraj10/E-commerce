@@ -1,40 +1,84 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate ,Link} from "react-router-dom";
 
-const Home = () => {
+
+const Home = ({ items }) => {
 
   const navigate = useNavigate();
 
   const handleLogout = () => {
+      
     // Later you can clear login data here
     navigate("/"); // go back to login page
+
+    
   };
 
-  return (
-    <div className="p-6 flex flex-col items-center justify-center p-9 bg-gray-300">
+  const handleadditem =() =>{
+     
 
-      <div className="bg-white p-10 rounded-2xl shadow-lg text-center w-96">
+      navigate("/additem");
+    }
+  return (
+    <div className="w-screen min-h-screen m-0 bg-slate-900 flex items-center justify-center ">
+
+      <div className=" border border-white p-10  rounded-2xl text-center ">
         
-        <h1 className="text-3xl text-red-300 font-bold mb-4">
+        <nav className="flex justify-between  mb-4 "><h1 className="text-3xl text-red-300 font-bold mb-4">
            Welcome!
         </h1>
-<div className="flex  mb-5 ">
+        <button className="m-2" onClick={handleadditem} >add item</button> </nav>
+        {items.map(item => (
+  <div key={item.id} className="bg-gray-800 p-4 rounded">
+    <h2>{item.name}</h2>
+    <p>{item.description}</p>
+    <p>${item.price}</p>
+  </div>
+))}
+
+<div className=" gap-4 flex  m-5 mb-9 ">
        <input
         type='text'
         holder='user name'
-        className='w-full  font-mono p-3 rounded-lg bg-gray-200 text-black border-2 border-b-gray-900 mb-4'
-       /><button
-          className=" text-white  "
+        className='w-full mt-4 font-mono p-3 rounded-lg bg-gray-200 text-black border-2 border-b-gray-900 mb-4'
+       />
+       <button
+          className=" text-white m-2 mt-4 px-4 py-2 rounded-2xl "
         >search </button>
 </div>
 
-<button className="flex " >bidding item</button>
+
+<div><Link 
+          to="/additem"
+          className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
+        >
+          Add Item
+        </Link>
+      </div>
+      <div className="grid grid-cols-3 gap-6">
+
+        {items.length === 0 ? (
+          <p>No items added yet</p>
+        ) : (
+          items.map((item) => (
+            <div 
+              key={item.id}
+              className="bg-gray-800 p-5 rounded-xl"
+            >
+              <h2 className="text-xl font-bold">{item.name}</h2>
+              <p className="mt-2">{item.description}</p>
+              <p className="mt-2 text-green-400">${item.price}</p>
+            </div>
+          ))
+        )}
+
+      </div>
 
 
 
 
         <button
           onClick={handleLogout}
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          className="fixed bottom-4 right-4 "
         >
           Click log out
 
