@@ -2,12 +2,13 @@ import { useNavigate ,Link} from "react-router-dom";
 
 
 const Home = ({ items }) => {
+  console.log(items);
 
   const navigate = useNavigate();
 
   const handleLogout = () => {
       
-    // Later you can clear login data here
+  
     navigate("/"); // go back to login page
 
     
@@ -27,14 +28,9 @@ const Home = ({ items }) => {
            Welcome!
         </h1>
         <button className="m-2" onClick={handleadditem} >add item</button> </nav>
-        {items.map(item => (
-  <div key={item.id} className="bg-gray-800 p-4 rounded">
-    <h2>{item.name}</h2>
-    <p>{item.description}</p>
-    <p>${item.price}</p>
-  </div>
-))}
-
+        
+     
+      
 <div className=" gap-4 flex  m-5 mb-9 ">
        <input
         type='text'
@@ -46,15 +42,7 @@ const Home = ({ items }) => {
         >search </button>
 </div>
 
-
-<div><Link 
-          to="/additem"
-          className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
-        >
-          Add Item
-        </Link>
-      </div>
-      <div className="grid grid-cols-3 gap-6">
+     <div className="grid grid-cols-3 gap-6">
 
         {items.length === 0 ? (
           <p>No items added yet</p>
@@ -62,16 +50,21 @@ const Home = ({ items }) => {
           items.map((item) => (
             <div 
               key={item.id}
-              className="bg-gray-800 p-5 rounded-xl"
+              className="bg-gray-700 p-5 rounded-xl"
             >
               <h2 className="text-xl font-bold">{item.name}</h2>
               <p className="mt-2">{item.description}</p>
-              <p className="mt-2 text-green-400">${item.price}</p>
+              <p className="mt-2 text-green-400">₹{item.price}</p>
+              <p className="mt-2 size-3">{item.image.length} photos</p>
             </div>
           ))
         )}
 
       </div>
+
+
+
+      
 
 
 

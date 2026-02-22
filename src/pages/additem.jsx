@@ -25,6 +25,7 @@ const AddItem = ({ setItems }) => {
   };
 
   const handleSubmit = (e) => {
+      e.preventDefault(); 
 
 
 

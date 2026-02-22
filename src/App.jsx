@@ -7,7 +7,7 @@ import './App.css'
 
 function App() {
 
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState([]); 
 
   return (
 <Router>
@@ -15,10 +15,9 @@ function App() {
     <Route path='/' element={<Login/>}/>
 
     <Route path='/Login' element={<Login/>}/>
-    <Route path="/home" element={<Home items={items} />} />
-<Route path="/additem" element={<AddItem setItems={setItems} />} />
-//element should capital
-        <Route path="*" element={<Home items={items} />} />
+
+        <Route path="/home" element={<Home items={items} />} />
+        <Route path="/additem" element={<AddItem setItems={setItems} />} />
 
 
     </Routes>
