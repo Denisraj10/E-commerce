@@ -24,28 +24,34 @@ const AddItem = ({ setItems }) => {
     setImage(files)
   };
 
-  const handleSubmit = (e) => {
-      e.preventDefault(); 
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
+  if (image.length < 2) {
+    alert("Minimum 2 photos required");
+    return;
+  }
 
+  try {
+    await fetch("http://localhost:5000/items", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name,
+        price,
+        description,
+        category
+      })
+    });
 
-    if (image.length < 2) {
-      alert("Minimum 2 photos required");
-      return;
-    }
+    navigate("/home");
 
-    const newItem = {
-      id: Date.now(),
-      name,
-      price,
-      description,
-      category,
-      image
-    };
-
-      setItems(prev => [...prev, newItem]);
-     navigate("/home");
-  };
+  } catch (error) {
+    console.error("Error adding item:", error);
+  }
+};
 
   return (
     <div className="min-h-screen bg-slate-900 flex justify-center items-center text-white">

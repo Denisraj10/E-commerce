@@ -1,13 +1,21 @@
-import { useNavigate ,Link} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 
-const Home = ({ items }) => {
-  console.log(items);
+const Home = () => {
+
 
   const navigate = useNavigate();
 
+  const [items, setItems] = useState([]);
+
+    useEffect(() => {
+    fetch("http://localhost:5000/items")
+      .then(res => res.json())
+      .then(data => setItems(data));
+  }, []);
+  console.log(items);
   const handleLogout = () => {
-      
   
     navigate("/"); // go back to login page
 
@@ -18,6 +26,15 @@ const Home = ({ items }) => {
      
 
       navigate("/additem");
+
+  const handleDelete = async (id) => {
+    await fetch(`http://localhost:5000/items/${id}`, {
+      method: "DELETE"
+    });
+
+    setItems(items.filter(item => item.id !== id));
+  };
+
     }
   return (
     <div className="w-screen min-h-screen m-0 bg-slate-900 flex items-center justify-center ">
@@ -52,10 +69,21 @@ const Home = ({ items }) => {
               key={item.id}
               className="bg-gray-700 p-5 rounded-xl"
             >
+              {item.image && (
+      <img
+        src={item.image}
+        alt={item.name}
+        className="w-32 h-32 object-cover rounded-lg mb-3"
+      />
+    )}
               <h2 className="text-xl font-bold">{item.name}</h2>
               <p className="mt-2">{item.description}</p>
               <p className="mt-2 text-green-400">₹{item.price}</p>
               <p className="mt-2 size-3">{item.image.length} photos</p>
+<button onClick={() => handleDelete(item.id)}>
+            Delete
+          </button>
+
             </div>
           ))
         )}
