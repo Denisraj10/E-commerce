@@ -28,12 +28,15 @@ const Home = () => {
       navigate("/additem");
 
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:5000/items/${id}`, {
-      method: "DELETE"
-    });
+  await fetch(`http://localhost:5000/delete-item/${id}`, {
+    method: "DELETE",
+  });
 
-    setItems(items.filter(item => item.id !== id));
-  };
+ 
+  setItems(items.filter((item) => item.id !== id));
+};
+
+    
 
     }
   return (
@@ -80,9 +83,12 @@ const Home = () => {
               <p className="mt-2">{item.description}</p>
               <p className="mt-2 text-green-400">₹{item.price}</p>
               <p className="mt-2 size-3">{item.image.length} photos</p>
-<button onClick={() => handleDelete(item.id)}>
-            Delete
-          </button>
+<button
+  onClick={() => handleDelete(item.id)}
+  className="bg-red-500 px-3 py-1 rounded mt-3"
+>
+  Delete
+</button>
 
             </div>
           ))
